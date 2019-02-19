@@ -1222,6 +1222,9 @@ ast_for_arg(struct compiling *c, const node *n)
 
     assert(TYPE(n) == tfpdef || TYPE(n) == vfpdef);
     ch = CHILD(n, 0);
+    if (TYPE(ch) == LPAR) {
+        ch = CHILD(n, 1);
+    }
     name = NEW_IDENTIFIER(ch);
     if (!name)
         return NULL;
@@ -1230,6 +1233,12 @@ ast_for_arg(struct compiling *c, const node *n)
 
     if (NCH(n) == 3 && TYPE(CHILD(n, 1)) == COLON) {
         annotation = ast_for_expr(c, CHILD(n, 2));
+        if (!annotation)
+            return NULL;
+    } 
+    /* This is in an else if to clean up condition */
+    else if (NCH(n) == 5 && TYPE(CHILD(n, 2)) == COLON) {
+        annotation = ast_for_expr(c, CHILD(n, 3));
         if (!annotation)
             return NULL;
     }

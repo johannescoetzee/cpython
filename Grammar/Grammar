@@ -32,7 +32,7 @@ varargslist: (vfpdef ['=' test] (',' vfpdef ['=' test])* [',' [
   | '*' [vfpdef] (',' vfpdef ['=' test])* [',' ['**' vfpdef [',']]]
   | '**' vfpdef [',']
 )
-vfpdef: NAME
+vfpdef: NAME | '(' NAME ':' test ')'
 
 stmt: simple_stmt | compound_stmt
 simple_stmt: small_stmt (';' small_stmt)* [';'] NEWLINE
